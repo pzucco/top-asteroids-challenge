@@ -5,9 +5,9 @@ import math
 
 class StupidBot(BotBase):
 
-	def process(self, gamestate):
+    def process(self, gamestate):
 
-		return Action.THRUST
+        return Action(1, 1, 1, 1)
 
 
 

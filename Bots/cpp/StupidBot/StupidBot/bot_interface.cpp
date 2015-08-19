@@ -187,6 +187,7 @@ void GameState::ParseData(string toParse)
 			ssr >> velx;
 			ssr >> vely;
 			ssr >> radius;
+			ssr >> lifetime;
 			ssr >> owner;
 			
 			laserIds.push_back(uid);

@@ -76,21 +76,21 @@ class GameState(object):
         self.arenaRadius = 0
         self.__last_action = Action.IDLE
 
-    def get_ship(self, uid):
+    def __get_ship(self, uid):
         if uid not in self.ships:
             ship = Ship(uid)
             self.ships[uid] = ship
         self.__missing.discard(uid)
         return self.ships[uid]
 
-    def get_rock(self, uid):
+    def __get_rock(self, uid):
         if uid not in self.rocks:
             rock = Rock(uid)
             self.rocks[uid] = rock
         self.__missing.discard(uid)
         return self.rocks[uid]
 
-    def get_laser(self, uid):
+    def __get_laser(self, uid):
         if uid not in self.lasers:
             laser = Laser(uid)
             self.lasers[uid] = laser
@@ -102,7 +102,7 @@ class GameState(object):
         sys.stderr.flush()
 
     def connect(self):
-        
+
         self.log("Bot Loaded")
 
         while 1:
@@ -138,13 +138,13 @@ class GameState(object):
         tokens = message.strip().split(" ")
 
         if tokens[0] == "ship":
-            self.get_ship(int(tokens[1])).update(posx=float(tokens[2]), posy=float(tokens[3]), velx=float(tokens[4]), vely=float(tokens[5]), radius=float(tokens[6]), ang=float(tokens[7]), velang=float(tokens[8]), charge=float(tokens[9]), score=int(tokens[10]))
+            self.__get_ship(int(tokens[1])).update(posx=float(tokens[2]), posy=float(tokens[3]), velx=float(tokens[4]), vely=float(tokens[5]), radius=float(tokens[6]), ang=float(tokens[7]), velang=float(tokens[8]), charge=float(tokens[9]), score=int(tokens[10]))
 
         if tokens[0] == "rock":
-            self.get_rock(int(tokens[1])).update(posx=float(tokens[2]), posy=float(tokens[3]), velx=float(tokens[4]), vely=float(tokens[5]), radius=float(tokens[6]))
+            self.__get_rock(int(tokens[1])).update(posx=float(tokens[2]), posy=float(tokens[3]), velx=float(tokens[4]), vely=float(tokens[5]), radius=float(tokens[6]))
         
         if tokens[0] == "laser":
-            self.get_laser(int(tokens[1])).update(posx=float(tokens[2]), posy=float(tokens[3]), velx=float(tokens[4]), vely=float(tokens[5]), radius=float(tokens[6]), lifetime=float(tokens[7]), owner=int(tokens[8]))
+            self.__get_laser(int(tokens[1])).update(posx=float(tokens[2]), posy=float(tokens[3]), velx=float(tokens[4]), vely=float(tokens[5]), radius=float(tokens[6]), lifetime=float(tokens[7]), owner=int(tokens[8]))
 
         if tokens[0] == "tick":
             self.tick = int(tokens[1])

@@ -29,24 +29,27 @@ public class GameState {
 		lastAction = new Action(0.0f, 0.0f, 0.0f, 0);
 	}
 	
-	public Ship getShip(int uid) {
+	Ship getShip(int uid) {
 		if (!ships.containsKey(uid)) {
 			ships.put(uid, new Ship(uid));
 		}
+		missing.remove(uid);
 		return ships.get(uid);
 	}
 	
-	public Rock getRock(int uid) {
+	Rock getRock(int uid) {
 		if (!rocks.containsKey(uid)) {
 			rocks.put(uid, new Rock(uid));
 		}
+		missing.remove(uid);
 		return rocks.get(uid);
 	}
 	
-	public Laser getLaser(int uid) {
+	Laser getLaser(int uid) {
 		if (!lasers.containsKey(uid)) {
 			lasers.put(uid, new Laser(uid));
 		}
+		missing.remove(uid);
 		return lasers.get(uid);
 	}
 	
@@ -59,7 +62,6 @@ public class GameState {
 		String[] tokens = data.trim().split("\\ ");
 		
 		if (tokens[0].equals("ship")) {
-			missing.remove(Integer.parseInt(tokens[1]));
 			getShip(Integer.parseInt(tokens[1])).update(
 					Float.parseFloat(tokens[2]),
 					Float.parseFloat(tokens[3]),
@@ -72,7 +74,6 @@ public class GameState {
 					Integer.parseInt(tokens[10])
 			);
 		} else if (tokens[0].equals("rock")) {
-			missing.remove(Integer.parseInt(tokens[1]));
 			getRock(Integer.parseInt(tokens[1])).update(
 					Float.parseFloat(tokens[2]),
 					Float.parseFloat(tokens[3]),
@@ -81,7 +82,6 @@ public class GameState {
 					Float.parseFloat(tokens[6])
 			);
 		} else if (tokens[0].equals("laser")) {
-			missing.remove(Integer.parseInt(tokens[1]));
 			getLaser(Integer.parseInt(tokens[1])).update(
 					Float.parseFloat(tokens[2]),
 					Float.parseFloat(tokens[3]),
